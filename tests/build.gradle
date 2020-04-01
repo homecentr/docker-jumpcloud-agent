@@ -22,6 +22,8 @@ dependencies {
 
 test {
     systemProperty 'image_tag', System.getProperty('image_tag')
+    systemProperty 'connect_key', System.getProperty('connect_key')
+    systemProperty 'api_key', System.getProperty('api_key')
     afterTest { desc, result ->
         logger.quiet "Executing test ${desc.name} [${desc.className}] with result: ${result.resultType}"
     }
