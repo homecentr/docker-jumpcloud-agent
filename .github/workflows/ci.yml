@@ -30,7 +30,7 @@ jobs:
         run: docker build . -t ${{ env.IMAGE_NAME }}:${{ steps.vars.outputs.docker_tag }}
 
       - name: Test Docker image
-        run: cd tests && sudo gradle test --info -Dimage_tag=${{ env.IMAGE_NAME }}:${{ steps.vars.outputs.docker_tag }} -Dconnect_key=${{ secrets.JUMPCLOUD_CONNECT_KEY }} -Dapi_key=${{ secrets.JUMPCLOUD_API_KEY }}
+        run: cd tests && sudo gradle test --info -Dconnect_key=${{ secrets.JUMPCLOUD_CONNECT_KEY }} -Dapi_key=${{ secrets.JUMPCLOUD_API_KEY }} -Dimage_tag=${{ env.IMAGE_NAME }}:${{ steps.vars.outputs.docker_tag }}
 
       - name: Scan with Phonito Security
         uses: phonito/phonito-scanner-action@master
