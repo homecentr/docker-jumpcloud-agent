@@ -1,11 +1,12 @@
 name: CI/CD on master
 on:
   push:
-    branches:
-      - master
+    # branches:
+    #   - master
 
 env:
   IMAGE_NAME: "homecentr/jumpcloud-agent"
+  RELEASE_VERSION: 55.5.0
 
 jobs:
   build:
@@ -18,10 +19,10 @@ jobs:
         with:
           java-version: 11
 
-      - name: "Determine release version"
-        uses: codfish/semantic-release-action@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # - name: "Determine release version"
+      #   uses: codfish/semantic-release-action@master
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Verify Dockerfile with Hadolint
         uses: brpaz/hadolint-action@master
@@ -40,7 +41,7 @@ jobs:
 
       - name: Test Docker image
         if: env.RELEASE_VERSION != ''
-        run: cd tests && sudo gradle test -Dimage_tag=${{ env.IMAGE_NAME }}:${{ env.RELEASE_VERSION }}
+        run: cd tests && sudo gradle test -Dconnect_key=${{ secrets.JUMPCLOUD_CONNECT_KEY }} -Dapi_key=${{ secrets.JUMPCLOUD_API_KEY }} -Dimage_tag=${{ env.IMAGE_NAME }}:${{ env.RELEASE_VERSION }}
       
       - name: Scan with Phonito Security
         if: env.RELEASE_VERSION != ''
