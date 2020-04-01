@@ -1,0 +1,5 @@
+#!/usr/bin/with-contenv bash
+
+echo "Starting agent..."
+
+/opt/jc/bin/jumpcloud-agent -conf=/opt/jc/jcagent.conf
