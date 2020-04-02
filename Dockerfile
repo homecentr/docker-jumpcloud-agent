@@ -10,9 +10,6 @@ FROM homecentr/base:centos-1.2.1 as base
 ###
 FROM centos:8
 
-LABEL maintainer="Lukas Holota <me@lholota.com>"
-LABEL org.homecentr.dependency-version=$AGENT_PACKAGE_VERSION
-
 ARG arch=x86_64
 ARG AGENT_PACKAGE_VERSION
 ARG AGENT_PACKAGE_NAME="jcagent-centos-8-x86_64"
@@ -21,6 +18,9 @@ ENV CONNECT_KEY=""
 ENV CONNECT_KEY_COMMAND="echo \$CONNECT_KEY"
 
 ENV S6_BEHAVIOUR_IF_STAGE2_FAILS=2
+
+LABEL maintainer="Lukas Holota <me@lholota.com>"
+LABEL org.homecentr.dependency-version=$AGENT_PACKAGE_VERSION
 
 # Copy over S6 overlay from base image
 COPY --from=base / /
