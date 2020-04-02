@@ -1,6 +1,10 @@
 version: "3.7"
 services:
-  $$IMAGE_NAME$$:
+  jumpcloud-agent:
     build: .
-    image: homecentr/$$IMAGE_NAME$$
+    image: homecentr/jumpcloud-agent
     restart: unless-stopped
+    volumes:
+      - ./connect_key.txt:/connect_key.txt:ro
+    environment:
+      CONNECT_KEY_COMMAND: "cat /connect_key.txt"

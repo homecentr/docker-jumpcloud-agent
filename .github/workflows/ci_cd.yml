@@ -5,7 +5,7 @@ on:
       - master
 
 env:
-  IMAGE_NAME: "homecentr/$$IMAGE_NAME$$"
+  IMAGE_NAME: "homecentr/jumpcloud-agent"
 
 jobs:
   build:
@@ -40,7 +40,7 @@ jobs:
 
       - name: Test Docker image
         if: env.RELEASE_VERSION != ''
-        run: cd tests && sudo gradle test -Dimage_tag=${{ env.IMAGE_NAME }}:${{ env.RELEASE_VERSION }}
+        run: cd tests && sudo gradle test -Dconnect_key=${{ secrets.JUMPCLOUD_CONNECT_KEY }} -Dapi_key=${{ secrets.JUMPCLOUD_API_KEY }} -Dimage_tag=${{ env.IMAGE_NAME }}:${{ env.RELEASE_VERSION }}
       
       - name: Scan with Phonito Security
         if: env.RELEASE_VERSION != ''

@@ -16,10 +16,14 @@ dependencies {
     testImplementation "org.testcontainers:testcontainers:1.12.5"
     testImplementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.30'
     testImplementation group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.30'
+    testImplementation group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.30'
+    testImplementation group: 'org.json', name: 'json', version: '20190722'
 }
 
 test {
     systemProperty 'image_tag', System.getProperty('image_tag')
+    systemProperty 'connect_key', System.getProperty('connect_key')
+    systemProperty 'api_key', System.getProperty('api_key')
     afterTest { desc, result ->
         logger.quiet "Executing test ${desc.name} [${desc.className}] with result: ${result.resultType}"
     }

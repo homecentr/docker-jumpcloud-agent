@@ -13,12 +13,13 @@ public abstract class ContainerTestBase {
 
     @BeforeClass
     public static void setUp() {
-        String dockerImageTag = System.getProperty("image_tag", "homecentr/$$IMAGE_NAME$$");
+        String dockerImageTag = System.getProperty("image_tag");
 
         logger.info("Tested Docker image tag: {}", dockerImageTag);
 
         _container = new GenericContainer<>(dockerImageTag)
-                .waitingFor(Wait.forHealthcheck());
+                .withEnv("CONNECT_KEY", Secrets.getConnectKey())
+                .waitingFor(Wait.forLogMessage("Starting agent\\.\\.\\.(.*)", 1));
 
         _container.start();
         _container.followOutput(new Slf4jLogConsumer(logger));
@@ -32,5 +33,9 @@ public abstract class ContainerTestBase {
 
     protected GenericContainer getContainer() {
         return _container;
+    }
+
+    protected String getContainerHostName() {
+        return getContainer().getContainerId().substring(0, 12);
     }
 }
