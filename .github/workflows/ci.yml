@@ -14,26 +14,26 @@ jobs:
     steps:
       - uses: actions/checkout@master
 
-      - name: Set up java for tests execution
-        uses: actions/setup-java@v1
-        with:
-          java-version: 11
+      # - name: Set up java for tests execution
+      #   uses: actions/setup-java@v1
+      #   with:
+      #     java-version: 11
       
-      - name: Set tag var
-        id: vars
-        run: echo ::set-output name=docker_tag::$(echo ${GITHUB_REF} | cut -d'/' -f3)-${GITHUB_SHA}
+      # - name: Set tag var
+      #   id: vars
+      #   run: echo ::set-output name=docker_tag::$(echo ${GITHUB_REF} | cut -d'/' -f3)-${GITHUB_SHA}
 
-      - name: Verify Dockerfile with Hadolint
-        uses: brpaz/hadolint-action@master      
+      # - name: Verify Dockerfile with Hadolint
+      #   uses: brpaz/hadolint-action@master      
 
-      - name: Build Docker image
-        run: docker build . -t ${{ env.IMAGE_NAME }}:${{ steps.vars.outputs.docker_tag }}
+      # - name: Build Docker image
+      #   run: docker build . -t ${{ env.IMAGE_NAME }}:${{ steps.vars.outputs.docker_tag }}
 
-      - name: Test Docker image
-        run: cd tests && sudo gradle test --info -Dconnect_key=${{ secrets.JUMPCLOUD_CONNECT_KEY }} -Dapi_key=${{ secrets.JUMPCLOUD_API_KEY }} -Dimage_tag=${{ env.IMAGE_NAME }}:${{ steps.vars.outputs.docker_tag }}
+      # - name: Test Docker image
+      #   run: cd tests && sudo gradle test --info -Dconnect_key=${{ secrets.JUMPCLOUD_CONNECT_KEY }} -Dapi_key=${{ secrets.JUMPCLOUD_API_KEY }} -Dimage_tag=${{ env.IMAGE_NAME }}:${{ steps.vars.outputs.docker_tag }}
 
-      - name: Scan with Phonito Security
-        uses: phonito/phonito-scanner-action@master
-        with:
-          image: ${{ env.IMAGE_NAME }}:${{ steps.vars.outputs.docker_tag }}
-          phonito-token: '${{ secrets.PHONITO_TOKEN }}'      
+      # - name: Scan with Phonito Security
+      #   uses: phonito/phonito-scanner-action@master
+      #   with:
+      #     image: ${{ env.IMAGE_NAME }}:${{ steps.vars.outputs.docker_tag }}
+      #     phonito-token: '${{ secrets.PHONITO_TOKEN }}'      
