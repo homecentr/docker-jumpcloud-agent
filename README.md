@@ -1,13 +1,1 @@
-# HomeCentr - jumpcloud-agent
-Template repository for Docker container repositories
-
-## Project status
-
-## Usage (Docker compose)
-
-### Env. variables
-### Exposed ports
-
-## Security
-
-### Vulnerabilities
+> This repository is archived and no longer maintained. The image is known to be working correctly at the time of archivation, but Homecentr does not use JumpCloud anymore.
